@@ -14,9 +14,15 @@ def about(request):
      return render(request,'about.html')
     # return HttpResponse("This iS ABOUT page")
 
-def services(request):
-     return render(request,'services.html')
-    # return HttpResponse("this is Services pages")
+def food(request):
+     return render(request,'food.html')
+
+def orders(request):
+     return render(request,'order.html')
+    
+def delivery(request):
+     return render(request,'delivery.html')
+    
 
 def contact(request):
      return render(request,'contact.html')

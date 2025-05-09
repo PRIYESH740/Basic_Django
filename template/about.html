@@ -1,7 +1,55 @@
 {% extends 'base.html' %}
+{% load static %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock css%}
 
 {% block title %}about {% endblock title %}
 
+
+
 {% block body %}
-This is my about page body
+<header>
+    <h1>About Us</h1>
+    <p>Welcome to Delicious Bites — where every bite tells a story</p>
+</header>
+
+<div class="container">
+    <h2>Our Story</h2>
+    <p>
+        Delicious Bites started in 2020 with a simple mission — to bring fresh, authentic, and mouth-watering meals to
+        food lovers.
+        From humble beginnings as a family kitchen, we’ve grown into a loved restaurant known for quality ingredients
+        and a cozy vibe.
+    </p>
+
+    <h2>Our Mission</h2>
+    <p>
+        We aim to create memorable dining experiences by combining traditional recipes with modern flavors.
+        Our team is passionate about food and committed to serving dishes that bring comfort and joy.
+    </p>
+
+    <h2>Meet the Team</h2>
+    <div class="team">
+        <div class="team-member">
+            <img src="{% static 'image/chef.jpeg' %}" alt="Chef" width="100">
+            <h3>Shivakar Dutta Verma</h3>
+            <p>Head Chef</p>
+        </div>
+        <div class="team-member">
+            <img src="{% static 'image/Photo_Priyesh-modified.png' %}" alt="Manager Priyesh Mishra" width="100">
+            <h3>Priyesh Mishra</h3>
+            <p>Restaurant Manager & CEO </p>
+        </div>
+        <div class="team-member">
+            <img src="{% static 'image/marketting.jpeg' %}" alt="Marketing" width="100">
+            <h3>Ravi Patel</h3>
+            <p>Head waiter</p>
+        </div>
+    </div>
+</div>
+
+
 {% endblock body %}

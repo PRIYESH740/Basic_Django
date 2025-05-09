@@ -4,6 +4,8 @@ from django.urls import path,include
 urlpatterns = [
     path("",views.home,name="Home"),
     path('about/',views.about,name='about'),
-    path('services/',views.services,name="services"),
+    path('food/',views.food,name="food"),
+    path('orders/',views.orders,name="orders"),
+    path('delivery/',views.delivery,name="delivery"),
     path('contact/',views.contact,name="contact"),
 ]

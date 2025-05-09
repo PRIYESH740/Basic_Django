@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}food{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/food.css' %}">
+{% endblock css %}
+
+{% block body %}
+<header>
+    <h1>Welcome to Delicious Bites</h1>
+    <p>Your go-to place for mouth-watering dishes!</p>
+</header>
+
+<div class="food-section">
+    <h2>Our Popular Dishes</h2>
+
+    <div class="food-item">
+        <img src="{% static 'image/pizza.jpg' %}" alt="Pizza" width="250" height="250">
+        <div>
+            <h3>Margherita Pizza</h3>
+            <p>Classic delight with fresh mozzarella and basil.</p>
+        </div>
+    </div>
+
+    <div class="food-item">
+        <img src="{% static 'image/burger.jpg' %}" alt="Burger" width="250" height="250">
+        <div>
+            <h3>Cheese Burger</h3>
+            <p>Juicy grilled patty with melted cheese and fresh veggies.</p>
+        </div>
+    </div>
+
+    <div class="food-item">
+        <img src="{% static 'image/pasta.jpg' %}" alt="Pasta" width="250" height="250">
+        <div>
+            <h3>Italian Pasta</h3>
+            <p>Creamy Alfredo pasta with a touch of herbs.</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock body %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Servies{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/delivery.css' %}">
+{% endblock css %}
+
+{% block body %}
+<header>
+    <h1>Track Your Delivery</h1>
+    <p>Stay updated on your order</p>
+</header>
+
+<div class="delivery-info">
+    <h2>Order #12345</h2>
+    <div class="status">Status: <strong>Out for Delivery</strong></div>
+    <div class="estimated-time">Estimated Arrival: <strong>30-40 minutes</strong></div>
+
+    <div class="driver-info">
+        <h3>Delivery Person Details:</h3>
+        <p><strong>Name:</strong> Rahul Sharma</p>
+        <p><strong>Phone:</strong> +91-9876543210</p>
+        <p><strong>Vehicle:</strong> Honda Activa - DL01AB1234</p>
+    </div>
+</div>
+
+
+
+
+
+{% endblock body %}
