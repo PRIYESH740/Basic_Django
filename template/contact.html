@@ -14,7 +14,7 @@
 
 <main>
     <h2>Get in Touch</h2>
-    <form action="#" method="post">
+    <form method="GET">
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" required>
 
@@ -27,8 +27,11 @@
         <label for="message">Your Message</label>
         <textarea id="message" name="message" rows="6" required></textarea>
 
-        <button type="submit">Send Message</button>
+        <button class="formabout" type="submit">Send Message</button>
     </form>
+    <div>
+        <pre>submitted data :{{output}}</pre>
+    </div>
 </main>
 
 {% endblock body %}

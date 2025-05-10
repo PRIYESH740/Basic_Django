@@ -25,5 +25,22 @@ def delivery(request):
     
 
 def contact(request):
-     return render(request,'contact.html')
+     detail={}
+     try:
+          n1=request.GET['name']
+          n2=request.GET['email']
+          n3=request.GET['subject']
+          n4=request.GET['message']
+
+          detail={
+          'name':n1,
+          'email':n2,
+          "subject":n3,
+          'message':n4
+     }
+     except:
+          print('I got some error in your form filling')
+
+     
+     return render(request,'contact.html',{"output":detail})
     # return HttpResponse("This is a contact us page")
