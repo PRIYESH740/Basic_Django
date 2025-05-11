@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}UserForm {% endblock title %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Calculater</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="num1">Value 1:</label>
+        <input type="text" name="num1" required>
+
+        <label for="num2">Value 2:</label>
+        <input type="text"  name="num2" required>
+
+        <label value="Select the operator" ></label>
+        <select>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+
+       <button type="submit" value="Calculator"></button>
+       
+    </form>
+</div>
+
+{% endblock body %}

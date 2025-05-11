@@ -14,7 +14,8 @@
 
 <div class="order-form">
     <h2>Fill in Your Details</h2>
-    <form action="#" method="POST">
+    <form  method="post">
+        {% csrf_token %}
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" required>
 

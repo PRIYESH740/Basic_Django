@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %} Home {% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/delivery.css' %}">
+{% endblock css %}
 
 {% block body %}
 <div class="container my-4">
@@ -35,6 +39,17 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+</div>
+
+
+<div class="delivery-info">
+
+    <div class="driver-info">
+        <h2>Contact Detail User</h2>
+        <div>
+        submitted data :{{output}}
+        </div>
+    </div>
 </div>
 
 {% endblock body %}

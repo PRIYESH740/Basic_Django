@@ -2,13 +2,13 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 0;
+    
 }
 
 header {
     background-color: #007BFF;
     color: white;
-    padding: 20px 0;
+    padding: 10px 10px;
     text-align: center;
 }
 
@@ -25,7 +25,7 @@ h2 {
     color: #333;
 }
 
-form {
+.contactform{
     display: flex;
     flex-direction: column;
 }
@@ -53,11 +53,13 @@ textarea {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    
 }
 
 .formabout:hover {
     background-color: #0056b3;
 }
+
 
 footer {
     background-color: #007BFF;

@@ -14,7 +14,8 @@
 
 <main>
     <h2>Get in Touch</h2>
-    <form method="GET">
+    <form method="post"  class="contactform" action="{% url 'submitform' %}">
+        {% csrf_token %}
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" required>
 
@@ -29,9 +30,6 @@
 
         <button class="formabout" type="submit">Send Message</button>
     </form>
-    <div>
-        <pre>submitted data :{{output}}</pre>
-    </div>
 </main>
 
 {% endblock body %}
