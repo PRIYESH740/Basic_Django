@@ -30,15 +30,36 @@
         We aim to create memorable dining experiences by combining traditional recipes with modern flavors.
         Our team is passionate about food and committed to serving dishes that bring comfort and joy.
     </p>
+    <h2>Our Services</h2>
+    <div class="container mt-5">
+        
+        <div class="row">
+            {% for n in ServiceData %}
+            <div class="col-md-4">
+                <div class="card text-center p-4 shadow-sm">
+                    <div class="mb-3">
+                        <i class="{{n.service_icon}}" style="font-size: 40px;"></i>
+                    <h5 id="service_title">{{n.service_title}}</h5>
+                    <p id="service_des">{{n.service_des}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
     <h2>Meet the Team</h2>
     <div class="team">
+        {% for i in memberData %}
         <div class="team-member">
-            <img src="{% static 'image/chef.jpeg' %}" alt="Chef" width="100">
-            <h3>Shivakar Dutta Verma</h3>
-            <p>Head Chef</p>
+            <img src="{{i.member_image.url}}" alt="Chef" width="100">
+            <h3>{{i.member_name}}</h3>
+            <p>{{i.member_position}}</p>
         </div>
-        <div class="team-member">
+        {% endfor %}
+        
+
+        <!-- <div class="team-member">
             <img src="{% static 'image/Photo_Priyesh-modified.png' %}" alt="Manager Priyesh Mishra" width="100">
             <h3>Priyesh Mishra</h3>
             <p>Restaurant Manager & CEO </p>
@@ -47,9 +68,9 @@
             <img src="{% static 'image/marketting.jpeg' %}" alt="Marketing" width="100">
             <h3>Ravi Patel</h3>
             <p>Head waiter</p>
-        </div>
+        </div> -->
     </div>
-</div>
+
 
 
 {% endblock body %}

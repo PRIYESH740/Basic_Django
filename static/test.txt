@@ -1,1 +1,0 @@
-Hello my friends, I am Priyesh Mishra, i am learning django concept.

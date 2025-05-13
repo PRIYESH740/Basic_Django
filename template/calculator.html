@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}UserForm {% endblock title %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Calculator</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="num1">Value 1:</label>
+        <input type="text" name="num1" class="form-control" required>
+
+        <label for="num2">Value 2:</label>
+        <input type="text"  name="num2" class="form-control" required>
+
+        <label for="opr" >Select the operator</label>
+        <select name='opr' class="form-control" required>
+            <option value="">-- Choose an operator --</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+       <br>&nbsp&nbsp;
+       <button type="submit">Calculator</button>
+    <br>
+    <label>output:</label>
+    <input type="text" value={{c}} class="form-control">
+       
+    </form>
+</div>
+
+{% endblock body %}

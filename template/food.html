@@ -14,16 +14,17 @@
 
 <div class="food-section">
     <h2>Our Popular Dishes</h2>
-
+    {% for n in foodData %}
     <div class="food-item">
-        <img src="{% static 'image/pizza.jpg' %}" alt="Pizza" width="250" height="250">
+        <img src="{{n.food_image.url}}" alt="Pizza" width="250" height="250">
         <div>
-            <h3>Margherita Pizza</h3>
-            <p>Classic delight with fresh mozzarella and basil.</p>
+            <h3>{{n.food_name}}</h3>
+            <p>{{n.food_des}}</p>
         </div>
     </div>
+    {% endfor %}
 
-    <div class="food-item">
+    <!-- <div class="food-item">
         <img src="{% static 'image/burger.jpg' %}" alt="Burger" width="250" height="250">
         <div>
             <h3>Cheese Burger</h3>
@@ -37,7 +38,7 @@
             <h3>Italian Pasta</h3>
             <p>Creamy Alfredo pasta with a touch of herbs.</p>
         </div>
-    </div>
+    </div> -->
 </div>
 
 

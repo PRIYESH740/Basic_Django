@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from .forms import usersForm
-
+from api.models import *
 # Create your views here.
 def home(request):
     # context={
@@ -15,11 +15,21 @@ def home(request):
      return render(request,'index.html',{'output':output})
 
 def about(request):
-     return render(request,'about.html')
+     ServiceData=Service.objects.all()
+     memberData=TeamMember.objects.all()
+     data={
+          'ServiceData':ServiceData,
+          'memberData':memberData
+          }
+     return render(request,'about.html',data)
     # return HttpResponse("This iS ABOUT page")
 
 def food(request):
-     return render(request,'food.html')
+     foodData=FoodItem.objects.all()
+     data={
+          'foodData':foodData
+     }
+     return render(request,'food.html',data)
 
 def orders(request):
      data={}
@@ -83,5 +93,47 @@ def submitform(request):
      return render(request,'userform.html',data) 
 
 def calculator(request):
+     c=''
+     try:
+          if request.method=="POST":
+               n1=eval(request.POST.get('num1'))
+               n2=eval(request.POST.get('num2'))
+               opr=request.POST.get('opr')
+
+               if opr=='+':
+                    c=n1+n2
+               elif opr=="-":
+                    c=n1-n2
+               elif opr=="*":
+                    c=n1*n2
+               else:
+                    c=n1/n2
+     except:
+          c='--Invalid-Operation--'
+     return render(request,'calculator.html',{'c':c}) 
+
+
+def marksheet(request):
+
+     if request.method=='POST':
+          s1=eval(request.POST.get('subject1'))
+          s2=eval(request.POST.get('subject2'))
+          s3=eval(request.POST.get('subject3'))
+          s4=eval(request.POST.get('subject4'))
+          s5=eval(request.POST.get('subject5'))
+
+          t=s1+s2+s3+s4+s5
+          p=(t*100)/500
+          if p>=60:
+               d="First Division"
+          elif p>=50:
+               d="Second Division"
+          elif p>=40:
+               d="Third Division"
+          else:
+               d='Fail'
+          data={'total':t,'per':p,'divi':d}
+
+          return render(request,'marksheet.html',data) 
+
      
-     return render(request,'calculator.html') 

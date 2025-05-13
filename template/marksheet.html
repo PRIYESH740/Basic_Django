@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}UserForm {% endblock title %}
+
+{% block body %}
+
+<h2>Student Marksheet Form</h2>
+<form  method="post">
+    {% csrf_token %}
+    <label for="subject1">Subject 1:</label>
+    <input type="number" class="form-floating" name="subject1" min="0" max="100" required>
+
+    <label for="subject2">Subject 2:</label>
+    <input type="number" class="form-floating" name="subject2" min="0" max="100" required>
+
+    <label for="subject3">Subject 3:</label>
+    <input type="number" class="form-floating" name="subject3" min="0" max="100" required>
+
+    <label for="subject4">Subject 4:</label>
+    <input type="number" class="form-floating" name="subject4" min="0" max="100" required>
+
+    <label for="subject5">Subject 5:</label>
+    <input type="number" class="form-floating" name="subject5" min="0" max="100" required>
+    <br> 
+    <br> &nbsp&nbsp&nbsp&nbsp;
+    <button type="submit"> Submit</button>
+    <br>
+    <br>
+    <label for="total">Total :</label>
+    <input type="text" value={{total}} >
+    
+    <label for="percentage">Percentage:</label>
+    <input type="text" value={{per}}%  >
+    
+    <label for="Division">Division:</label>
+    <input type="text" value={{divi}} >
+</form>
+
+{% endblock body %}
