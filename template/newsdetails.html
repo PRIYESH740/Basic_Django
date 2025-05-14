@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}News Detail {% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/newsdetails.css' %}">
+{% endblock css %}
+
+{% block body %}
+
+<div class="news-container">
+    <div class="news-heading"><i class="{{newsDetail.news_icon}}" style="font-size: 40px;"></i>{{newsDetail.news_title}}</div>
+    <div class="news-description">
+        {{newsDetail.news_desc | safe}}
+    </div>
+</div>
+
+{% endblock body %}

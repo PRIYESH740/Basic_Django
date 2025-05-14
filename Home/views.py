@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from .forms import usersForm
 from api.models import *
+from .models import News
 # Create your views here.
 def home(request):
     # context={
@@ -9,10 +10,16 @@ def home(request):
     # }
     # return render(request,'index.html',context)
     #return HttpResponse("This is home page")
-     if request.method=='GET':
-          output=request.GET.get('output')
+     # if request.method=='GET':
+     #      output=request.GET.get('output')
+     newsData=News.objects.all()
+     homeData=Homepage.objects.all()
+     data={
+          'homeData':homeData,
+          'newsData':newsData,
+     }
 
-     return render(request,'index.html',{'output':output})
+     return render(request,'index.html',data)
 
 def about(request):
      ServiceData=Service.objects.all()
@@ -25,7 +32,7 @@ def about(request):
     # return HttpResponse("This iS ABOUT page")
 
 def food(request):
-     foodData=FoodItem.objects.all()
+     foodData=FoodItem.objects.all().order_by('food_name')                  #[:3] this is limiting concept for showing number of content is 3.
      data={
           'foodData':foodData
      }
@@ -135,5 +142,13 @@ def marksheet(request):
           data={'total':t,'per':p,'divi':d}
 
           return render(request,'marksheet.html',data) 
+
+def newsdetails(request,newsid):
+     newsDetail=News.objects.get(id=newsid)
+     data={
+          'newsDetail':newsDetail
+     }
+
+     return render(request,'newsdetails.html',data)
 
      

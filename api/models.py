@@ -14,3 +14,6 @@ class FoodItem(models.Model):
     food_image = models.ImageField(upload_to='foods/')
     food_name=models.CharField(max_length=50)
     food_des=models.CharField(max_length=100)
+
+class Homepage(models.Model):
+    gallery_image = models.ImageField(upload_to='galleries/')

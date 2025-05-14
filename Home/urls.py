@@ -11,4 +11,5 @@ urlpatterns = [
     path('submitform/',views.submitform,name="submitform"),
     path('calculator/',views.calculator,name="calculator"),
     path('marksheet/',views.marksheet),
+    path('newsdetails/<newsid>/',views.newsdetails),
 ]

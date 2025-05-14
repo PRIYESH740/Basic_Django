@@ -3,10 +3,16 @@
 {% block title %} Home {% endblock title %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/delivery.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css %}
 
 {% block body %}
+
+<marquee onmouseover="stop()" onmouseout="start()">
+    {% for n in newsData %}
+    <a href="/newsdetails/{{n.id}}/" > <i class="{{n.news_icon}}" style="font-size: 30px;"></i>  {{n.news_title}}  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    {% endfor %}
+</marquee>
 <div class="container my-4">
 <div id="carouselExampleIndicators" class="carousel slide">
     <div class="carousel-indicators">
@@ -18,15 +24,17 @@
             aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
+        {% for n in homeData %}
         <div class="carousel-item active">
-            <img src="static\image\restaurant-1.jpg" class="d-block w-100" alt="..." height="500">
+            <img src="{{n.gallery_image.url}}" class="d-block w-100" alt="..." height="500">
         </div>
-        <div class="carousel-item">
+        <!-- <div class="carousel-item">
             <img src="static\image\restaurant-2.jpg" class="d-block w-100" alt="..."  height="500">
         </div>
         <div class="carousel-item">
             <img src="static\image\restaurant-3.jpg" class="d-block w-100" alt="..." height="500">
-        </div>
+        </div> -->
+        {% endfor %}
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
         data-bs-slide="prev">
@@ -41,15 +49,5 @@
 </div>
 </div>
 
-
-<div class="delivery-info">
-
-    <div class="driver-info">
-        <h2>Contact Detail User</h2>
-        <div>
-        submitted data :{{output}}
-        </div>
-    </div>
-</div>
 
 {% endblock body %}

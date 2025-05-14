@@ -7,3 +7,4 @@ class ServiceAdmin(admin.ModelAdmin):
 admin.site.register(Service,ServiceAdmin)
 admin.site.register(TeamMember)
 admin.site.register(FoodItem)
+admin.site.register(Homepage)
