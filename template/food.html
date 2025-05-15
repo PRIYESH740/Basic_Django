@@ -22,6 +22,8 @@
             <p>{{n.food_des}}</p>
         </div>
     </div>
+    {% empty %}
+    <h5>No Data Found</h5>
     {% endfor %}
 
     <!-- <div class="food-item">
@@ -40,7 +42,25 @@
         </div>
     </div> -->
 </div>
-
+<nav aria-label="..." >
+  <div class="container-fluid d-flex justify-content-center">
+    <ul class="pagination">
+      {% if foodData.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="/food/?page={{foodData.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      {% endif %}
+      {% for n in totalpagelist %}
+      <li class="page-item"><a class="page-link" href="/food/?page={{n}}">{{n}}</a></li>
+      {% endfor %}
+      {% if foodData.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="/food/?page={{foodData.next_page_number}}">Next</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  </nav>
 
 
 

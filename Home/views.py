@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from .forms import usersForm
 from api.models import *
 from .models import News
+from django.core.paginator import Paginator
+from django.core.mail import send_mail
+
 # Create your views here.
 def home(request):
     # context={
@@ -32,9 +34,19 @@ def about(request):
     # return HttpResponse("This iS ABOUT page")
 
 def food(request):
-     foodData=FoodItem.objects.all().order_by('food_name')                  #[:3] this is limiting concept for showing number of content is 3.
+     foodData=FoodItem.objects.all().order_by('food_name')                 #[:3] this is limiting concept for showing number of content is 3.
+     if request.method=='GET':
+          st=request.GET.get('foodSearching')
+          if st !=None:                 #__icontains it is using for single character and more character aur exact mactch 
+               foodData=FoodItem.objects.filter(food_name__icontains=st)
+     
+     paginator=Paginator(foodData,2)
+     page_number=request.GET.get('page')
+     foodDataFinal=paginator.get_page(page_number)
+     totalpage=foodDataFinal.paginator.num_pages
      data={
-          'foodData':foodData
+          'foodData':foodDataFinal,
+          'totalpagelist':[i+1 for i in range(totalpage)]
      }
      return render(request,'food.html',data)
 
@@ -70,6 +82,19 @@ def delivery(request):
     
 
 def contact(request):
+     return render(request,'contact.html')
+    # return HttpResponse("This is a contact us page")
+
+
+def newsdetails(request,slug):
+     newsDetail=News.objects.get(news_slug=slug)
+     data={
+          'newsDetail':newsDetail
+     }
+
+     return render(request,'newsdetails.html',data)
+
+def contactformsave(request):
      detail={}
      try:
           if request.method=='POST':
@@ -77,78 +102,38 @@ def contact(request):
                n2=request.POST.get('email')
                n3=request.POST.get('subject')
                n4=request.POST.get('message')
-
-          detail={
-          'Name':n1,
-          'Email':n2,
-          "Subject":n3,
-          'Message':n4
-     }
-          # url='/?output={}'.format(detail)
-          # return redirect(url)
-
-     except:
-          print('I got some error in your form filling')
-
-     
-     return render(request,'contact.html',{"output":detail})
-    # return HttpResponse("This is a contact us page")
-
-def submitform(request):
-     fn=usersForm()
-     data={'form':fn}
-     return render(request,'userform.html',data) 
-
-def calculator(request):
-     c=''
-     try:
-          if request.method=="POST":
-               n1=eval(request.POST.get('num1'))
-               n2=eval(request.POST.get('num2'))
-               opr=request.POST.get('opr')
-
-               if opr=='+':
-                    c=n1+n2
-               elif opr=="-":
-                    c=n1-n2
-               elif opr=="*":
-                    c=n1*n2
+              
+               if not ContactFormEnquiry.objects.filter(email=n2).exists():
+                    data=ContactFormEnquiry(name=n1, email=n2, subject=n3,message=n4)
+                    data.save()
+                    detail={
+                    "message":"Data is Submited",
+                    "name":n1
+                   }
                else:
-                    c=n1/n2
+                    detail={
+                    "message":"You are already contact us Admin",
+                    "name":n1
+                   }
+               send_mail (
+                    subject = f'According to your {n3}',
+                    message = f'Dear {n1},' + '''
+We would like to inform you that your issue is currently being addressed and will be resolved shortly. 
+We appreciate your patience and understanding.
+Thank you for your patience.
+
+Best regards,
+My Restaurant''',
+                    from_email = 'priyeshm845@gmail.com',
+                    recipient_list = [n2],
+                    fail_silently=True,
+               )
+          
+
      except:
-          c='--Invalid-Operation--'
-     return render(request,'calculator.html',{'c':c}) 
+          detail={
+               "message":"You make Some Error Input field",
+               'name':"Anonymous User"
+          }
 
-
-def marksheet(request):
-
-     if request.method=='POST':
-          s1=eval(request.POST.get('subject1'))
-          s2=eval(request.POST.get('subject2'))
-          s3=eval(request.POST.get('subject3'))
-          s4=eval(request.POST.get('subject4'))
-          s5=eval(request.POST.get('subject5'))
-
-          t=s1+s2+s3+s4+s5
-          p=(t*100)/500
-          if p>=60:
-               d="First Division"
-          elif p>=50:
-               d="Second Division"
-          elif p>=40:
-               d="Third Division"
-          else:
-               d='Fail'
-          data={'total':t,'per':p,'divi':d}
-
-          return render(request,'marksheet.html',data) 
-
-def newsdetails(request,newsid):
-     newsDetail=News.objects.get(id=newsid)
-     data={
-          'newsDetail':newsDetail
-     }
-
-     return render(request,'newsdetails.html',data)
-
-     
+     return render(request,'contact.html',detail)

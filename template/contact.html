@@ -10,11 +10,13 @@
 {% block body %}
 <header>
     <h1>Contact Us</h1>
+    
 </header>
 
 <main>
+    <div>{{name}}:&nbsp;{{message}}</div>
     <h2>Get in Touch</h2>
-    <form method="post"  class="contactform" action="{% url 'submitform' %}">
+    <form method="post"  class="contactform" action="{% url 'contactformsave' %}">
         {% csrf_token %}
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" required>

@@ -17,3 +17,15 @@ class FoodItem(models.Model):
 
 class Homepage(models.Model):
     gallery_image = models.ImageField(upload_to='galleries/')
+
+
+class ContactFormEnquiry(models.Model):
+    name=models.CharField(max_length=50)
+    email=models.EmailField()
+    subject=models.CharField(max_length=150)
+    message=models.TextField(max_length=500)
+
+
+    def __str__(self):
+        return f'username: {self.name}'
+

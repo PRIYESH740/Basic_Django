@@ -10,7 +10,7 @@
 
 <marquee onmouseover="stop()" onmouseout="start()">
     {% for n in newsData %}
-    <a href="/newsdetails/{{n.id}}/" > <i class="{{n.news_icon}}" style="font-size: 30px;"></i>  {{n.news_title}}  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    <a href="/newsdetails/{{n.news_slug}}/" > <i class="{{n.news_icon}}" style="font-size: 30px;"></i>  {{n.news_title}}  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
     {% endfor %}
 </marquee>
 <div class="container my-4">
