@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+    background-color: #f0fff0;
+    text-align: center;
+}
+
+.success-box {
+    background-color: #e0ffe0;
+    border: 2px solid #0a0;
+    padding: 2rem;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.success-box h2 {
+    color: green;
+}
+
+.success-box p {
+    margin: 0.5rem 0;
+}
+
+.success-box img {
+    max-width: 150px;
+    margin-top: 1rem;
+    border-radius: 8px;
+}

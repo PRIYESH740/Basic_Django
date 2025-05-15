@@ -13,34 +13,46 @@
 </header>
 
 <div class="order-form">
-    <h2>Fill in Your Details</h2>
-    <form  method="post">
+    <h2>Order: {{ food.food_name }}</h2>
+    <div class="text-center">
+        <img src="{{ food.food_image.url }}" alt="{{ food.food_name }}" class="img-fluid" width="250" height="150">
+    </div>
+      
+
+    <p>Description: {{ food.food_des }}</p>
+    <p>Price per item: ₹<span id="unit_price_display">{{ food.price }}</span></p>
+    <input type="hidden" id="unit_price" value="{{ food.price }}">
+
+    <form method="post"  action="{% url 'orderSuccessful' food.id %}">
         {% csrf_token %}
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" required>
-
-        <label for="address">Delivery Address</label>
-        <textarea id="address" name="address" rows="3" required></textarea>
-
-        <label for="food">Select Food Item</label>
-        <select id="food" name="food" required>
-            <option value="">-- Choose an item --</option>
-            <option value="pizza">Margherita Pizza</option>
-            <option value="burger">Cheese Burger</option>
-            <option value="pasta">Italian Pasta</option>
-        </select>
+        <p type="hidden" name="food_id" value="{{ food.id }}">
 
         <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" name="quantity" min="1" required>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" required oninput="updateTotal()">
+       
+        <p>Total Price: ₹<span id="total_price">{{ food.price }}</span></p>
+    
+        <label for="payment_method">Select Payment Method</label>
+        <select name="payment_method" id="payment_method" required>
+            <option value="cod">Cash on Delivery</option>
+            <option value="upi">UPI</option>
+            <option value="card">Credit/Debit Card</option>
+        </select>
 
-        <button type="submit">Place Order</button>
+        <button type="submit">Confirm Order</button>
     </form>
 </div>
 
 
+<script>
+    function updateTotal() {
+        const quantity = document.getElementById('quantity').value;
+        const unitPrice = document.getElementById('unit_price').value;
+        const total = quantity * unitPrice;
+        document.getElementById('total_price').innerText = total.toFixed(2);
+    }
+</script>
+  
 
 
 {% endblock body %}

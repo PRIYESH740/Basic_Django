@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from api.models import *
 from .models import News
@@ -40,7 +40,7 @@ def food(request):
           if st !=None:                 #__icontains it is using for single character and more character aur exact mactch 
                foodData=FoodItem.objects.filter(food_name__icontains=st)
      
-     paginator=Paginator(foodData,2)
+     paginator=Paginator(foodData,4)
      page_number=request.GET.get('page')
      foodDataFinal=paginator.get_page(page_number)
      totalpage=foodDataFinal.paginator.num_pages
@@ -50,30 +50,28 @@ def food(request):
      }
      return render(request,'food.html',data)
 
-def orders(request):
-     data={}
-     try:
-          if request.method=='POST':
-               name=request.POST.get('name')
-               phone=request.POST.get('phone')
-               address=request.POST.get('address')
-               food=request.POST.get('food')
-               quantity=request.POST.get('quantity')
-          
-          data={
-               'Name':name,
-          'Phone':phone,
-          "Address":address,
-          'Food':food,
-          'Quantity':quantity
-          }
-          url='/delivery/?output={}'.format(data)
-          return HttpResponseRedirect(url)
 
-     except:
-          print('Invalid input')
+def orders(request, food_id):
+    food = get_object_or_404(FoodItem, id=food_id)
+    return render(request, 'order.html', {'food': food})
 
-     return render(request,'order.html')
+def orderSuccessful(request,food_id):
+     food = get_object_or_404(FoodItem, id=food_id)
+     if request.method == 'POST':
+        quantity = int(request.POST.get('quantity'))  # defaults to 1 if not sent
+        payment_method = request.POST.get('payment_method')
+        total_price = food.price * quantity
+
+        # Save the order
+        Order.objects.create(
+            food=food,
+            quantity=quantity,
+            total_price=total_price,
+            payment_method=payment_method,
+        )
+     return render(request, 'order_success.html', {'food': food,'total_price':total_price})
+
+    
     
 def delivery(request):
      if request.method=='GET':

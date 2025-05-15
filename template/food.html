@@ -5,43 +5,40 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/food.css' %}">
 {% endblock css %}
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 {% block body %}
-<header>
-    <h1>Welcome to Delicious Bites</h1>
-    <p>Your go-to place for mouth-watering dishes!</p>
+<header class="text-center my-4">
+  <h1>Welcome to Delicious Bites</h1>
+  <p>Your go-to place for mouth-watering dishes!</p>
 </header>
 
-<div class="food-section">
-    <h2>Our Popular Dishes</h2>
-    {% for n in foodData %}
-    <div class="food-item">
-        <img src="{{n.food_image.url}}" alt="Pizza" width="250" height="250">
-        <div>
-            <h3>{{n.food_name}}</h3>
-            <p>{{n.food_des}}</p>
+<div class="container">
+  <h2 class="mb-4">Our Popular Dishes</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for item in foodData %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ item.food_image.url }}" class="card-img-top" alt="{{ item.food_name }}"
+          style="height: 180px; object-fit: cover;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ item.food_name }}</h5>
+          <p class="card-text">{{ item.food_des }}</p>
+          <p class="card-text fw-bold text-success">₹{{ item.price }}</p>
+          <form method="post" action="{% url 'orders' item.id %}" class="mt-auto">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary w-100">Order Now</button>
+          </form>
         </div>
+      </div>
     </div>
     {% empty %}
-    <h5>No Data Found</h5>
+    <p>No data found.</p>
     {% endfor %}
+  </div>
 
-    <!-- <div class="food-item">
-        <img src="{% static 'image/burger.jpg' %}" alt="Burger" width="250" height="250">
-        <div>
-            <h3>Cheese Burger</h3>
-            <p>Juicy grilled patty with melted cheese and fresh veggies.</p>
-        </div>
-    </div>
 
-    <div class="food-item">
-        <img src="{% static 'image/pasta.jpg' %}" alt="Pasta" width="250" height="250">
-        <div>
-            <h3>Italian Pasta</h3>
-            <p>Creamy Alfredo pasta with a touch of herbs.</p>
-        </div>
-    </div> -->
-</div>
 <nav aria-label="..." >
   <div class="container-fluid d-flex justify-content-center">
     <ul class="pagination">
