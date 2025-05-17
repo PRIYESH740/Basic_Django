@@ -63,20 +63,30 @@ def orderSuccessful(request,food_id):
         total_price = food.price * quantity
 
         # Save the order
-        Order.objects.create(
+        order=Order.objects.create(
             food=food,
             quantity=quantity,
             total_price=total_price,
             payment_method=payment_method,
         )
-     return render(request, 'order_success.html', {'food': food,'total_price':total_price})
+        orderid=order.id
+        return render(request, 'order_success.html', {'food':food,"total_price":total_price,'order':orderid})
 
     
-    
+def deliveryDetail(request,orderid):
+     order=get_object_or_404(Order,id=orderid)
+     output={
+          "food":order.food.food_name,
+          'quantity':order.quantity,
+          'total_price':order.total_price
+     }
+     # url="/delivery/?output={}".format(output)
+     # return redirect(url)
+     return render(request,'delivery.html', output)
+
+
 def delivery(request):
-     if request.method=='GET':
-          output=request.GET.get('output')
-     return render(request,'delivery.html',{'output':output})
+     return render(request,'delivery.html')
     
 
 def contact(request):
@@ -122,7 +132,7 @@ Thank you for your patience.
 
 Best regards,
 My Restaurant''',
-                    from_email = 'priyeshm845@gmail.com',
+                    from_email = 'example@gmail.com',
                     recipient_list = [n2],
                     fail_silently=True,
                )

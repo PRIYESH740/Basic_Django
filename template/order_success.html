@@ -10,12 +10,16 @@
 
 <div class="success-box">
     <h2>✅ Order Placed Successfully!</h2>
+    <p>OrderID: {{order}}</p>
     <p>Thank you for ordering <strong>{{ food.food_name }}</strong>.</p>
     <p>Your delicious food is being prepared and will be delivered soon!</p>
     <img src="{{ food.food_image.url }}" alt="{{ food.food_name }}">
     <p><strong>Total Price:</strong>{{total_price}}</p>
     <br><br>
-    <a href="{% url 'food' %}">Back to food</a>
+    <form method="post" action="{% url 'deliveryDetail' order %}" class="mt-auto">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary w-100">Delivery Page</button>
+    </form>
 </div>
 
 {% endblock body %}
