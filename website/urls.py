@@ -27,6 +27,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("",include("Home.urls")),
     # path("api/",include("api.urls")),
+    path('account/',include('reg_user.urls')),
 ] 
 
 if settings.DEBUG:

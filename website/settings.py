@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'Home',
     'api',
     'tinymce',
+    'reg_user',
+    'rest_framework',
+    'rest_framework_simplejwt',
     
 ]
 
@@ -132,6 +135,19 @@ STATICFILES_DIRS=[ BASE_DIR/ 'static' ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
+
+
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

@@ -145,3 +145,6 @@ My Restaurant''',
           }
 
      return render(request,'contact.html',detail)
+
+def login(request):
+     return render(request,'login.html')

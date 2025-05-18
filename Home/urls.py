@@ -12,4 +12,5 @@ urlpatterns = [
     path('contact/',views.contact,name="contact"),
     path('newsdetails/<slug>/',views.newsdetails),
     path('contactformsave/',views.contactformsave,name="contactformsave"),
+    path('login/',views.login,name="login"),
 ]
