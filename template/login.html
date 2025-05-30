@@ -21,25 +21,40 @@
                     <i class="fas fa-user-plus me-1"></i>Register
                 </button>
             </li>
+            <li>
+            {% if request.session.access %}
+            <!-- User is logged in: show logout -->
+            <div class="text-center mt-4">
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                    </button>
+                </form>
+            </div>
+            {%endif %}
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
             <!-- Login Tab -->
             <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                <form method="post" action="{% url 'token-auth' %}">
+                <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="loginUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="loginUsername" name="username"  required>
+                        <input type="text" class="form-control" id="loginUsername" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="loginPassword" class="form-label">Password</label>
-                        <input type="text" class="form-control" id="loginPassword" name="password" required>
+                        <input type="password" class="form-control" id="loginPassword" name="password" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="fas fa-sign-in-alt me-1"></i>Login
                     </button>
+                    {% if login_error %}
+                    <div class="mt-2 alert alert-danger">{{ login_error }}</div>
+                    {% endif %}
                 </form>
             </div>
 
@@ -53,32 +68,43 @@
                     </div>
                     <div class="mb-3">
                         <label for="regEmail" class="form-label">Email address</label>
-                        <input type="text" class="form-control" id="regEmail" name="email" required>
-                    </div>                                      
-                    <div class="mb-3">
-                        <label for="regPassword" class="form-label">Password</label>
-                        <input type="text" class="form-control" id="regPassword" name="password" required>
+                        <input type="email" class="form-control" id="regEmail" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="comfirmPassword" class="form-label">Confirm Password</label>
-                        <input type="text" class="form-control" id="comfirmPassword" name="password2" required>
+                        <label for="regPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="regPassword" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="password2" required>
                     </div>
                     <button type="submit" class="btn btn-success w-100">
                         <i class="fas fa-user-plus me-1"></i>Register
                     </button>
                 </form>
+
+                {% if errors %}
+                <ul class="mt-2 alert alert-danger">
+                    {% for field, field_errors in errors.items %}
+                    <li><strong>{{ field }}:</strong> {{ field_errors.0 }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
             </div>
-            <div class="text-center mt-4">
-                <p class="text-muted">
-                    <i class="fas fa-user-plus me-2"></i>
-                    New user? <strong>Register first</strong>
-                </p>
-            </div>
-              
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="text-muted">
+                <i class="fas fa-user-plus me-2"></i>
+                New user? <strong>Register first</strong>
+            </p>
         </div>
     </div>
+   
+
 </div>
 
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 {% endblock body %}

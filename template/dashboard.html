@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block body %}
+<h1>Welcome to the Dashboard</h1>
+
+<h2>Data from API:</h2>
+<pre>{{ data|safe }}</pre>
+
+<a href="{% url 'logout' %}" class="btn btn-danger mt-3">Logout</a>
+{% endblock body %}
