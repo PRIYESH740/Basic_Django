@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'Home',
     'api',
+    'login',
     'tinymce',
-    'reg_user',
     'rest_framework',
     'rest_framework_simplejwt',
     
@@ -82,9 +82,13 @@ WSGI_APPLICATION = "website.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "restaurant",
+        'USER': "root",
+        'PASSWORD':"Priyesh@2002",
+        'HOST': "localhost",
+        'PORT': 3306
     }
 }
 
@@ -138,15 +142,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-}
-
-
-
-
+AUTH_USER_MODEL = 'login.CustomUser'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

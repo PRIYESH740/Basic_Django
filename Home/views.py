@@ -1,19 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponse,HttpResponseRedirect
 from api.models import *
 from .models import News
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
+from rest_framework import permissions
 
 # Create your views here.
 def home(request):
-    # context={
-    #     'variable':"Hello developer , How are you?"
-    # }
-    # return render(request,'index.html',context)
-    #return HttpResponse("This is home page")
-     # if request.method=='GET':
-     #      output=request.GET.get('output')
      newsData=News.objects.all()
      homeData=Homepage.objects.all()
      data={
@@ -34,6 +27,8 @@ def about(request):
     # return HttpResponse("This iS ABOUT page")
 
 def food(request):
+     permission_classes = [permissions.IsAuthenticated]
+
      foodData=FoodItem.objects.all().order_by('food_name')                 #[:3] this is limiting concept for showing number of content is 3.
      if request.method=='GET':
           st=request.GET.get('foodSearching')
@@ -52,10 +47,12 @@ def food(request):
 
 
 def orders(request, food_id):
+    permission_classes = [permissions.IsAuthenticated]
     food = get_object_or_404(FoodItem, id=food_id)
     return render(request, 'order.html', {'food': food})
 
 def orderSuccessful(request,food_id):
+     permission_classes = [permissions.IsAuthenticated]
      food = get_object_or_404(FoodItem, id=food_id)
      if request.method == 'POST':
         quantity = int(request.POST.get('quantity'))  # defaults to 1 if not sent
@@ -74,6 +71,7 @@ def orderSuccessful(request,food_id):
 
     
 def deliveryDetail(request,orderid):
+     permission_classes = [permissions.IsAuthenticated]
      order=get_object_or_404(Order,id=orderid)
      output={
           "food":order.food.food_name,
@@ -86,10 +84,12 @@ def deliveryDetail(request,orderid):
 
 
 def delivery(request):
+     permission_classes = [permissions.IsAuthenticated]
      return render(request,'delivery.html')
     
 
 def contact(request):
+     permission_classes = [permissions.IsAuthenticated]
      return render(request,'contact.html')
     # return HttpResponse("This is a contact us page")
 

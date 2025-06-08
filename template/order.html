@@ -12,12 +12,15 @@
     <p>Fresh & Delicious at your doorstep</p>
 </header>
 
+
 <div class="order-form">
+    {% if user.is_authenticated %}
+    <p>Username: {{ user.username}}</p>
+    {% endif %}
     <h2>Order: {{ food.food_name }}</h2>
     <div class="text-center">
         <img src="{{ food.food_image.url }}" alt="{{ food.food_name }}" class="img-fluid" width="250" height="150">
     </div>
-      
 
     <p>Description: {{ food.food_des }}</p>
     <p>Price per item: ₹<span id="unit_price_display">{{ food.price }}</span></p>

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login/Register{% endblock title %}
+
+{% block body %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="container d-flex justify-content-center align-items-center mt-4">
+    <div class="card shadow p-4 rounded" style="width: 100%; max-width: 400px;">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs mb-3" id="authTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login"
+                    type="button" role="tab" aria-controls="login" aria-selected="true">
+                    <i class="fas fa-sign-in-alt me-1"></i>Login
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button"
+                    role="tab" aria-controls="register" aria-selected="false">
+                    <i class="fas fa-user-plus me-1"></i>Register
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Login Tab -->
+            <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" name="email" required
+                            value="{{ request.POST.email|default:'' }}">
+                        {% if form.errors.email %}
+                        <div class="invalid-feedback d-block">{{ form.errors.email }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" name="password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    {% if form.errors %}
+                    <div class="mt-2 alert alert-danger">
+                        Invalid email or password.
+                    </div>
+                    {% endif %}
+                    <p class="mt-3 text-center">Don't have an account? <a href="#" onclick="showRegisterTab()">Register
+                            here</a></p>
+                </form>
+            </div>
+
+            <!-- Register Tab -->
+            <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                <form method="post" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    <!-- Username Field (non-unique) -->
+                    <div class="mb-3">
+                        <label for="regUsername" class="form-label">Username</label>
+                        <input type="text" class="form-control {% if form.errors.username %}is-invalid{% endif %}"
+                            id="regUsername" name="username" required value="{{ form.username.value|default:'' }}">
+                        {% if form.errors.username %}
+                        <div class="invalid-feedback">
+                            {{ form.errors.username.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email Field (unique) -->
+                    <div class="mb-3">
+                        <label for="regEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control {% if form.errors.email %}is-invalid{% endif %}"
+                            id="regEmail" name="email" required value="{{ form.email.value|default:'' }}">
+                        {% if form.errors.email %}
+                        <div class="invalid-feedback">
+                            {{ form.errors.email.0 }}
+                            <script>
+                                window.onload = function () {
+                                    showRegisterTab();
+                                };
+                            </script>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Fields -->
+                    <div class="mb-3">
+                        <label for="regPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control {% if form.errors.password1 %}is-invalid{% endif %}"
+                            id="regPassword1" name="password1" required>
+                        {% if form.errors.password1 %}
+                        <div class="invalid-feedback">
+                            {{ form.errors.password1.0 }}
+                            <script>
+                                window.onload = function () {
+                                    showRegisterTab();
+                                };
+                            </script>
+                        </div>
+                        {% endif %}
+                        <div class="form-text">At least 8 characters</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="regPassword2" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control {% if form.errors.password2 %}is-invalid{% endif %}"
+                            id="regPassword2" name="password2" required>
+                        {% if form.errors.password2 %}
+                        <div class="invalid-feedback">
+                            {{ form.errors.password2.0 }}
+                            <script>
+                                window.onload = function () {
+                                    showRegisterTab();
+                                };
+                            </script>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-user-plus me-1"></i> Register
+                    </button>
+
+                    <p class="mt-3 text-center">Already have an account?
+                        <a href="#" onclick="showLoginTab()">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        {% if user.is_authenticated %}
+        <div class="text-center mt-4">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function showRegisterTab() {
+        const tabTrigger = new bootstrap.Tab(document.querySelector('#register-tab'));
+        tabTrigger.show();
+    }
+
+    function showLoginTab() {
+        const tabTrigger = new bootstrap.Tab(document.querySelector('#login-tab'));
+        tabTrigger.show();
+    }
+
+</script>
+
+{% endblock body %}

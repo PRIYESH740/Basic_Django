@@ -10,6 +10,9 @@
 
 <div class="success-box">
     <h2>✅ Order Placed Successfully!</h2>
+    {% if user.is_authenticated %}
+    <p>Username: {{ user.username}}</p>
+    {% endif %}
     <p>OrderID: {{order}}</p>
     <p>Thank you for ordering <strong>{{ food.food_name }}</strong>.</p>
     <p>Your delicious food is being prepared and will be delivered soon!</p>

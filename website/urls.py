@@ -26,8 +26,8 @@ admin.site.index_title = "Welcome to My Custom Admin"
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("",include("Home.urls")),
-    # path("api/",include("api.urls")),
-    path('account/',include('reg_user.urls')),
+    path('api/',include('login.api.urls')),
+    
 ] 
 
 if settings.DEBUG:

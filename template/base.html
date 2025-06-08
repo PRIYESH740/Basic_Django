@@ -15,14 +15,10 @@
       crossorigin="anonymous"
     />
 
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
     {% block css %}{% endblock css%}
-    <!-- <style>
-       .nav-item a.active{
-        background-color: #ff8a7f;
-        transform: scale(1.05);
-        transition: transform 0.2s ease;
-      }
-    </style> -->
+
 
   </head>
 
@@ -110,17 +106,29 @@
               aria-label="Search"
               name="foodSearching"
             />
-            <button class="btn btn-outline-success" type="submit">
+            <button class="btn btn-outline-success me-4" type="submit">
               Search
             </button>
           </form>
           
-          <a class="nav-link mx-4" aria-current="page" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>login</a>
           
           <!-- <li class="nav-item">
             <a class="nav-link" aria-current="page" href="#"><i class="fas fa-user-plus"></i></i>Register</a>
           </li> -->
         </div>
+        {% if not user.is_authenticated %}
+        <a class="nav-link mx-4" aria-current="page" href="{% url 'login' %}">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        {%endif %}
+        
+        {% if user.is_authenticated %}
+        <div class="d-flex align-items-center mb-3">
+          <div class="circle-avatar me-3">{{ user.username|slice:":1" }}</div>
+        </div>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        {% endif %}
+
       </div>
     </nav>
     <!-- <p>This is an Quato {{variable}}</p> -->

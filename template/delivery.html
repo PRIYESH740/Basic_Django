@@ -14,6 +14,9 @@
 
 <div class="delivery-info">
     <h2>Order #123{{food.id}}</h2>
+    {% if user.is_authenticated %}
+    <p>Username: {{ user.username}}</p>
+    {% endif %}
     <div class="status">Status: <strong>Out for Delivery</strong></div>
     <div class="User_detail">Food Detail: {{food}}</div>
     <div class="quantity">Quantity: {{quantity}}</div>
