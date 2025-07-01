@@ -27,6 +27,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("",include("Home.urls")),
     path('api/',include('login.api.urls')),
+    path('crud/',include('CRUD_Admin.api.urls')),
+    path('order/',include('api.urls')),
     
 ] 
 

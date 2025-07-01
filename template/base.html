@@ -80,9 +80,14 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'delivery' %}"
+                  <a class="dropdown-item" href="{% url 'delivery_page' %}"
                     >delivery</a
                   >
+                </li>
+                <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'order_history' %}">Order histroy</a>
                 </li>
               </ul>
             </li>
@@ -96,6 +101,16 @@
                 href="{% url 'contact' %}"
                 >Contact Us</a
               >
+            </li>
+            <li>
+              <li class="nav-link">
+                {% if user.is_authenticated and user.is_superuser %}
+                <a class="nav-link mx-4" href="{% url 'food_list' %}">
+                  <i class="fas fa-cogs"></i> Admin
+                </a>
+                {% endif %}
+
+              </li>
             </li>
           </ul>
           <form class="d-flex" role="search" action="{% url 'food' %}">

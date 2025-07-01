@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 class Service(models.Model):
     service_icon=models.CharField(max_length=50)
     service_title=models.CharField(max_length=100)
@@ -24,6 +24,7 @@ class Homepage(models.Model):
     gallery_image = models.ImageField(upload_to='galleries/')
 
 class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders',null=True, blank=True)
     food = models.ForeignKey(FoodItem, on_delete=models.CASCADE,related_name='foods')
     quantity = models.PositiveIntegerField(default=1)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)

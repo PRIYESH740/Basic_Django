@@ -3,7 +3,7 @@ from api.models import *
 from .models import News
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
-from rest_framework import permissions
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -27,7 +27,6 @@ def about(request):
     # return HttpResponse("This iS ABOUT page")
 
 def food(request):
-     permission_classes = [permissions.IsAuthenticated]
 
      foodData=FoodItem.objects.all().order_by('food_name')                 #[:3] this is limiting concept for showing number of content is 3.
      if request.method=='GET':
@@ -45,14 +44,15 @@ def food(request):
      }
      return render(request,'food.html',data)
 
-
+@login_required
 def orders(request, food_id):
-    permission_classes = [permissions.IsAuthenticated]
+     
     food = get_object_or_404(FoodItem, id=food_id)
     return render(request, 'order.html', {'food': food})
 
+@login_required
 def orderSuccessful(request,food_id):
-     permission_classes = [permissions.IsAuthenticated]
+     
      food = get_object_or_404(FoodItem, id=food_id)
      if request.method == 'POST':
         quantity = int(request.POST.get('quantity'))  # defaults to 1 if not sent
@@ -61,6 +61,7 @@ def orderSuccessful(request,food_id):
 
         # Save the order
         order=Order.objects.create(
+            user=request.user,
             food=food,
             quantity=quantity,
             total_price=total_price,
@@ -69,27 +70,32 @@ def orderSuccessful(request,food_id):
         orderid=order.id
         return render(request, 'order_success.html', {'food':food,"total_price":total_price,'order':orderid})
 
+@login_required    
+def deliveryDetail(request, orderid):
+    order = get_object_or_404(Order, id=orderid, user=request.user)
+
+    # Store delivery details in session (expires in 15 minutes)
+    request.session['delivery_info'] = {
+        "food": order.food.food_name,
+        "quantity": order.quantity,
+        "total_price": float(order.total_price),  # Decimal not JSON serializable
+        "orderid": order.id
+    }
+    request.session.set_expiry(900)  # 15 minutes = 900 seconds
+
+    return redirect('delivery_page')
+
+@login_required
+def delivery_page(request):
+    delivery = request.session.get('delivery_info')
+    if not delivery:
+        return render(request, 'delivery_expired.html')  # optional template
+
+    return render(request, 'delivery.html', delivery)
+
     
-def deliveryDetail(request,orderid):
-     permission_classes = [permissions.IsAuthenticated]
-     order=get_object_or_404(Order,id=orderid)
-     output={
-          "food":order.food.food_name,
-          'quantity':order.quantity,
-          'total_price':order.total_price
-     }
-     # url="/delivery/?output={}".format(output)
-     # return redirect(url)
-     return render(request,'delivery.html', output)
-
-
-def delivery(request):
-     permission_classes = [permissions.IsAuthenticated]
-     return render(request,'delivery.html')
-    
-
+@login_required
 def contact(request):
-     permission_classes = [permissions.IsAuthenticated]
      return render(request,'contact.html')
     # return HttpResponse("This is a contact us page")
 

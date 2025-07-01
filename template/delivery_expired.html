@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delivery{% endblock title %}
+
+
+{% block body %}
+
+<div class="container text-center mt-5">
+    <h3 class="text-danger">Delivery session expired</h3>
+    <p>Please go to your order history or place a new order to track delivery.</p>
+    <a href="{% url 'order_history' %}" class="btn btn-primary mt-3">My Orders</a>
+</div>
+
+{% endblock body %}

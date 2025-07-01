@@ -14,7 +14,7 @@
 </header>
 
 <main>
-    <div>{{name}}:&nbsp;{{message}}</div>
+    <div>{{name}}&nbsp;{{message}}</div>
     <h2>Get in Touch</h2>
     <form method="post"  class="contactform" action="{% url 'contactformsave' %}">
         {% csrf_token %}

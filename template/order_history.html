@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Order histroy{% endblock title %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Order History</h2>
+
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    {% if user.is_authenticated %}
+                    <th>User Email</th>
+                    {% endif %}
+                    <th>Food</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Total Price (₹)</th>
+                    <th>Payment Method</th>
+                    <th>Order Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr class="text-center">
+                    {% if user.is_authenticated %}
+                    <td>{{ order.user.email }}</td>
+                    {% endif %}
+                    <td>{{ order.food.food_name }}</td>
+                    <td>
+                        {% if order.food.food_image %}
+                        <img src="{{ order.food.food_image.url }}" alt="image" class="img-thumbnail"
+                            style="height: 60px; object-fit: cover;">
+                        {% else %}
+                        No image
+                        {% endif %}
+                    </td>
+                    <td>{{ order.quantity }}</td>
+                    <td>₹{{ order.total_price }}</td>
+                    <td>{{ order.get_payment_method_display }}</td>
+                    <td>{{ order.order_time|date:"d M Y, h:i A" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-center">No orders found.</p>
+    {% endif %}
+</div>
+
+{% endblock body %}

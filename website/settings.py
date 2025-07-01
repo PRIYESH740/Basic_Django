@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Home',
     'api',
     'login',
+    'CRUD_Admin',
     'tinymce',
     'rest_framework',
     'rest_framework_simplejwt',

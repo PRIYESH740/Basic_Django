@@ -1,38 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Servies{% endblock title %}
+
+{% block title %}Delivery{% endblock title %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/delivery.css' %}">
 {% endblock css %}
 
 {% block body %}
-<header>
+<header class="text-center my-4">
     <h1>Track Your Delivery</h1>
     <p>Stay updated on your order</p>
 </header>
 
-<div class="delivery-info">
-    <h2>Order #123{{food.id}}</h2>
-    {% if user.is_authenticated %}
-    <p>Username: {{ user.username}}</p>
-    {% endif %}
-    <div class="status">Status: <strong>Out for Delivery</strong></div>
-    <div class="User_detail">Food Detail: {{food}}</div>
-    <div class="quantity">Quantity: {{quantity}}</div>
-    <div class="total_price">Total Price :{{total_price}}</div>
-    <div class="estimated-time">Estimated Arrival: <strong>10-20 minutes</strong></div>
+<div class="delivery-info container shadow p-4 rounded bg-light">
+    <h2 class="mb-3 text-primary">Order #123{{ orderid }}</h2>
 
-    <div class="driver-info">
-        <h3>Delivery Person Details:</h3>
-        <p><strong>Name:</strong> Rahul Sharma</p>
-        <p><strong>Phone:</strong> +91-9876543210</p>
-        <p><strong>Vehicle:</strong> Honda Activa - DL01AB1234</p>
+    {% if user.is_authenticated %}
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    {% endif %}
+
+    <div class="mb-2"><strong>Status:</strong> <span class="text-success">Out for Delivery</span></div>
+    <div class="mb-2"><strong>Food Item:</strong> {{ food }}</div>
+    <div class="mb-2"><strong>Quantity:</strong> {{ quantity }}</div>
+    <div class="mb-2"><strong>Total Price:</strong> ₹{{ total_price }}</div>
+    <div class="mb-3"><strong>Estimated Arrival:</strong> 10–20 minutes</div>
+
+    <div class="driver-info mt-4">
+        <h4 class="text-secondary">Delivery Person Details</h4>
+        <ul class="list-unstyled">
+            <li><strong>Name:</strong> Rahul Sharma</li>
+            <li><strong>Phone:</strong> +91-9876543210</li>
+            <li><strong>Vehicle:</strong> Honda Activa - DL01AB1234</li>
+        </ul>
     </div>
 </div>
-
-
-
-
-
 {% endblock body %}

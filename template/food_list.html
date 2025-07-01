@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Foods List{% endblock title %}
+
+{% block body %}
+
+<div class="container mt-4">
+
+    <!-- Add New Button -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'food_create' %}" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Add New
+        </a>
+    </div>
+
+    <!-- Food Items List -->
+    <div class="row">
+        {% for food in foods %}
+        <div class="col-md-12 mb-3">
+            <div class="card d-flex flex-row align-items-center p-2">
+                <!-- Food Image -->
+                <img src="{{ food.food_image.url }}" alt="{{ food.food_name }}" class="img-thumbnail me-3"
+                    style="width: 100px; height: 100px; object-fit: cover;">
+
+                <!-- Food Details -->
+                <div class="flex-grow-1">
+                    <h5 class="mb-1">{{ food.food_name }}</h5>
+                    <p class="mb-1 text-muted">₹{{ food.price }}</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div>
+                    <a href="{% url 'food_update' food.pk %}" class="btn btn-primary btn-sm me-2">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'food_delete' food.pk %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>No food items found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+  
+
+{% endblock body %}
