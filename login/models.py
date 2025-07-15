@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
         }
     )
     
-    # Remove username uniqueness constraint
+
     username = models.CharField(
         max_length=150,
         unique=False,  # This allows duplicate usernames
