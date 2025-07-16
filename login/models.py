@@ -12,7 +12,6 @@ class CustomUser(AbstractUser):
         }
     )
     
-
     username = models.CharField(
         max_length=150,
         unique=False,  # This allows duplicate usernames
